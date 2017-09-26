@@ -56,7 +56,8 @@ def test_full_group(P=[0.05, 0.45, 0.5], count=10000):
 
     print('Иммитация полной группы событий:')
     for i, p in enumerate(P[:-1]):
-        print('Событие №{}: Кол-во {} в процентах {}% Теорет. {}%'.format(i, counters[i], counters[i] * 100.0 / count, p * 100.0))
+        print('Событие №{}: Кол-во {} в процентах {}% Теорет. {}%'.format(
+                i, counters[i], counters[i] * 100.0 / count, p * 100.0))
     print('')
 
 

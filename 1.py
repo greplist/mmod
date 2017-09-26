@@ -55,10 +55,10 @@ class Figure(object):
         pylab.figure(figsize=(24, 6))
 
     def plot(self, nums, i):
-        print(nums[:10])
         pylab.subplot(1, 2, i)
         pylab.hist(nums, normed=1)
-        pylab.title('{} numbers. M = {}. D = {}. K = {}'.format(len(nums), M(nums), D(nums), correlation(nums)))
+        pylab.title('{} numbers. M = {:.4f}. D = {:.4f}. K = {:.4f}'.format(
+            len(nums), M(nums), D(nums), correlation(nums)))
 
     def show(self):
         pylab.show()
@@ -68,7 +68,6 @@ def test(method):
     n_100 = method(100)
     n_10000 = method(10000)
 
-    # Тест равномерности
     figure = Figure()
     figure.plot(n_100, 1)
     figure.plot(n_10000, 2)

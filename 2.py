@@ -22,7 +22,7 @@ def test_simple(P=0.2, count=10000):
 
 def test_complex(PA=0.6, PB=0.7, count=10000):
     X1 = MKM(count)
-    X2 = MKM(count)
+    X2 = MKM(count, A0=25325)
 
     A_B, notA_B, A_notB, notA_notB = 0, 0, 0, 0
     for a, b in zip(X1, X2):
@@ -35,10 +35,10 @@ def test_complex(PA=0.6, PB=0.7, count=10000):
         elif a > PA and b > PB:
             notA_notB += 1
     print('Иммитация сложного события P(A) = {} и P(B) = {}:'.format(PA, PB))
-    print('A и B: произошло {} в процентах {}%'.format(A_B, A_B * 100.0 / count))
-    print('not A и B: произошло {} в процентах {}%'.format(notA_B, notA_B * 100.0 / count))
-    print('A и not B: произошло {} в процентах {}%'.format(A_notB, A_notB * 100.0 / count))
-    print('not A и not B: произошло {} в процентах {}%'.format(notA_notB, notA_notB * 100.0 / count))
+    print('A и B: произошло {} в процентах {}% Теор {}%'.format(A_B, A_B * 100.0 / count, PA*PB*100.0))
+    print('not A и B: произошло {} в процентах {}% Теор {}%'.format(notA_B, notA_B * 100.0 / count, (1 - PA)*PB*100))
+    print('A и not B: произошло {} в процентах {}% Teop {}%'.format(A_notB, A_notB * 100.0 / count, PA*(1 - PB)*100))
+    print('not A и not B: произошло {} в процентах {}% Teop {}%'.format(notA_notB, notA_notB * 100.0 / count, (1 - PA)*(1 - PB)*100))
     print('')
 
 

@@ -72,9 +72,13 @@ def exp_test(count):
     F = build_F(X, Y)
     TF = [norm.cdf(x) for x in X]
 
+    # alpha = 0.01 & n = 1000
+    max_sigma = 0.86
+
     max_delta = max([abs(f - ft) for f, ft in zip(F, TF)])
     sigma = math.sqrt(count) * max_delta
-    pylab.title('kolmogorov: max delta = {:.4} sigma = {:.4} < 0.86'.format(max_delta, sigma))
+    pylab.title('kolmogorov: max delta = {:.4} sigma = {:.4} < {:.4}, viborka is {}'.format(
+        max_delta, sigma, max_sigma, 'OK' if sigma < max_sigma else 'NOT OK'))
     pylab.plot(X, F)
     pylab.plot(X, TF)
 

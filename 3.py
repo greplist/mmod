@@ -8,9 +8,30 @@ def M(nums):
     return sum(nums) * 1.0 / len(nums)
 
 
+def M_with_interval(X):
+    m = M(X)
+
+    # y = 0.99 & n > 100 (koeff Studenta)
+    t = 3.319
+    s = math.sqrt(sum([(xi - m) ** 2 for xi in X]) * 1.0 / (len(X) - 1))
+    delta = s * t / math.sqrt(len(X) - 1)
+
+    return m - delta, m, m + delta
+
+
 def D(nums):
     nlen, mnums = len(nums), M(nums)
     return sum([nums[i]**2 - mnums**2 for i in xrange(nlen)]) * 1.0 / nlen
+
+
+def D_with_interval(X):
+    m = M(X)
+
+    xi2_minus, xi2_plus = 993.26, 897.36
+    n_s_2 = sum([(xi - m) ** 2 for xi in X]) * 1.0 / (len(X) - 1) * len(X)
+    print(n_s_2)
+
+    return n_s_2 / xi2_minus, D(X), n_s_2 / xi2_plus
 
 
 def MKM(count, n=30, k=123456789, A0=2):
@@ -35,8 +56,11 @@ def build_F(X, Y):
 
 def exp_test(count):
     Y = list(([norm.ppf(x) for x in MKM(count)]))
-    MY, TMY, DY, TDY = M(Y), 0.0, D(Y), norm.var()
-    pylab.title('{} numbers. M = {:.4} TM = {:.4} D = {:.4} TD = {:.4}'.format(count, MY, TMY, DY, TDY))
+    TMY, TDY = 0.0, norm.var()
+    M_min, MY, M_max = M_with_interval(Y)
+    D_min, DY, D_max = D_with_interval(Y)
+    pylab.title('N={}: {:.3}<= M <={:.3} (M={:.3} TM={:.3})\n {:.3}<= D <={:.3} (D={:.3} TD={:.3})'.format(
+        count, M_min, M_max, MY, TMY, D_min, D_max, DY, TDY))
     pylab.hist(Y, normed=1)
 
     X = list([x * 0.01 for x in xrange(-400, 400)])

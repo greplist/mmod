@@ -68,20 +68,22 @@ def test_dependent_complex(PA=0.6, PB=0.5, PBA=0.4, count=10000):
     print('')
 
 
-def test_full_group(P=[0.05, 0.45, 0.5], count=10000):
+def test_full_group(PI=[0.05, 0.45, 0.5], count=10000):
     X = MKM(count)
 
-    P = list(P) + [1.1]
+    P = list([sum(PI[:i+1]) for i in range(len(PI))])
 
     counters = [0] * len(P)
     for x in X:
         pred = 0
         for i, p in enumerate(P):
-            if pred <= x and x < p:
+            if pred <= x and x <= p:
                 counters[i] += 1
+                break
+            pred = p
 
     print('Иммитация полной группы событий:')
-    for i, p in enumerate(P[:-1]):
+    for i, p in enumerate(PI):
         print('Событие №{}: Кол-во {} в процентах {}% Теорет. {}%'.format(
                 i, counters[i], counters[i] * 100.0 / count, p * 100.0))
     print('')

@@ -29,7 +29,6 @@ def D_with_interval(X):
 
     xi2_minus, xi2_plus = 993.26, 897.36
     n_s_2 = sum([(xi - m) ** 2 for xi in X]) * 1.0 / (len(X) - 1) * len(X)
-    print(n_s_2)
 
     return n_s_2 / xi2_minus, D(X), n_s_2 / xi2_plus
 

@@ -1,5 +1,6 @@
 import copy
 import pylab
+import itertools
 
 
 def M(nums):
@@ -36,7 +37,7 @@ def resolve_index(PI, x):
 
 def plot_xi(XI, A, PX):
     X = list([A[xi] for xi in XI])
-    TX = list([p * a for p, a in zip(PX, A)])
+    TX = list(itertools.chain.from_iterable([[A[i] for _ in range(int(p * len(XI)))] for i, p in enumerate(PX)]))
 
     MX, TMX, DX, TDX = M(X), M(TX), D(X), D(TX)
     pylab.title('N={}: M={:.3} TM={:.3}\n D={:.3} TD={:.3}'.format(
@@ -57,8 +58,6 @@ def test(P, A, B, count=10000):
             PY_X[i][j] = P[i][j] / PX[i]
 
     XI = list([resolve_index(PX, x) for x in MKM(count)])
-    print(PY_X)
-    print(XI)
     YI = list([resolve_index(PY_X[xi], y) for xi, y in zip(XI, MKM(count, k=321321321))])
 
     plot_xi(XI, A, PX)
@@ -71,6 +70,6 @@ if __name__ == '__main__':
         [0.1, 0.05, 0.25],
         [0.05, 0.2, 0.05],
     ]
-    A = (10, 20, 30)
-    B = (1, 2, 3)
+    A = (0.3, 0.6, 0.9)
+    B = (0.3, 0.6, 0.9)
     test(P, A, B)
